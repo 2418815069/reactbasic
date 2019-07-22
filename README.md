@@ -1,8 +1,46 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## 环境安装
 
-In the project directory, you can run:
+## 技术栈
+
+- create-react-app
+- react
+- redux
+- react-redux
+- redux-thunk
+- react-router-dom
+  <!-- - axios -->
+- antd
+- styled-components
+
+## 按需加载，修改配置环境，以适应 antd([官网参考](https://ant.design/docs/react/use-with-create-react-app-cn))
+
+    	- `npm i react-app-rewired -D`
+    	- 修改package.json的启动配置
+    	`
+    		"scripts": {
+    		    "start": "react-app-rewired start",
+    		    "build": "react-app-rewired build",
+    		    "test": "react-app-rewired test --env=jsdom",
+    		    "eject": "react-scripts eject"
+    		  }
+    	`
+    	- `npm i babel-plugin-import -D`
+    	- 项目根目录创建config-overrides.js
+    	`
+    	  const { injectBabelPlugin } = require('react-app-rewired');
+    	  module.exports = function override(config, env) {
+    	  	config = injectBabelPlugin(['import', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' }], config);
+    	    return config;
+    	  };
+    	`
+
+## 引入 react-app-rewired 并修改 package.json 里的启动配置。由于新的 react-app-rewired@2.x 版本的关系，你还需要安装 customize-cra，否则会出现如下的问题。
+
+### npm install customize-cra --save-dev
+
+### yarn add customize-cra --dev
 
 ### `npm start`
 
