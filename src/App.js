@@ -1,13 +1,20 @@
 import React from 'react';
-import Login from './login';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Login from './view/login/login';
 
 function App() {
-  return ( <
-    div className = "App" >
-    <
-    Login / >
-    <
-    /div>
+  return (
+    <BrowserRouter>
+    <Switch>
+      <Route path='/login' component={Login}></Route>
+      {/* <Route path='/' component={Admin}></Route> */}
+    </Switch>
+    
+      <div className="App">
+        {/* <Login /> */}
+      </div>
+    </BrowserRouter>
+    
   );
 }
 
