@@ -1,13 +1,55 @@
 import React from "react";
 import "./login.less";
 import { Form, Icon, Input, Button, Checkbox, message } from "antd";
+import axios from "axios";
+import { setLocalStorage, getLocalStorage } from "../../utils/localStrageUtils";
+// import { reqLogin } from "../../api/index";
 
 class WrappedNormalLoginForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      result: ""
+    };
+  }
   handleSubmit = e => {
     e.preventDefault();
+
     this.props.form.validateFields((err, values) => {
+      console.log(values);
       if (!err) {
-        console.log("Received values of form: ", values);
+        console.log(values);
+        if (values.remember) {
+          setLocalStorage("username", values.username);
+          setLocalStorage("password", values.password);
+          setLocalStorage("loginStatus", 1);
+        }
+        // console.log("Received values of form: ", values);
+        // reqLogin(values.username, values.password).then(res => {
+        //   console.log(res);
+        // });
+        // values
+        axios
+          .post("/login", {
+            username: values.username,
+            password: values.password
+          })
+          .then(response => {
+            this.setState({
+              result: response.data
+            });
+            if (this.state.result.status === 0) {
+              message.success("登陆成功 ");
+              // 跳转到后台管理界面
+              this.props.history.push("/");
+            } else if (this.state.result.status === 1) {
+              message.error("登陆失败,用户名或密码不正确");
+            }
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
       } else {
         message.error("登陆失败，请检查 ");
       }
@@ -23,6 +65,7 @@ class WrappedNormalLoginForm extends React.Component {
             <h1 className="loginTitle">用户登陆</h1>
             <Form.Item>
               {getFieldDecorator("username", {
+                initialValue: getLocalStorage("username"),
                 rules: [
                   { required: true, message: "用户名不能为空" },
                   { min: 4, message: "用户名最少4位" },
@@ -43,6 +86,7 @@ class WrappedNormalLoginForm extends React.Component {
             </Form.Item>
             <Form.Item>
               {getFieldDecorator("password", {
+                initialValue: getLocalStorage("password"),
                 rules: [
                   { required: true, message: "密码不能为空" },
                   { min: 4, message: "用户名最少4位" },

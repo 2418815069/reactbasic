@@ -1,21 +1,9 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import styled from "styled-components";
 import Header from "./header";
 import { getLocalStorage } from "../../utils/localStrageUtils";
-import SiderMenu from "./menu";
+// import { reqLogin } from "../../api/index";
 
-const Container = styled.div`
-  display: flex;
-  .main {
-    flex: 1;
-    background-color: #f0f2f5;
-  }
-  .adminContent {
-    margin: 20px;
-    background-color: white;
-  }
-`;
 class Admin extends React.Component {
   constructor(props) {
     super(props);
@@ -28,15 +16,7 @@ class Admin extends React.Component {
     if (!getLocalStorage("username")) {
       return <Redirect to="/login" />;
     }
-    return (
-      <Container>
-        <SiderMenu />
-        <div className="main">
-          <Header />
-          <div className="adminContent" />
-        </div>
-      </Container>
-    );
+    return <div>h</div>;
   }
 }
 export default Admin;
