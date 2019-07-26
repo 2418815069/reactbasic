@@ -1,6 +1,8 @@
 import React from "react";
 import { Menu, Icon } from "antd";
 import styled from "styled-components";
+import { Link, withRouter } from "react-router-dom";
+import menuList from "../../config/menuConfig";
 import {
   getLocalStorage,
   removeLocalStorage
@@ -8,6 +10,14 @@ import {
 const { SubMenu } = Menu;
 const Container = styled.div`
   width: 200px;
+  background-color: #011428;
+  h1 {
+    color: white;
+    font-size: 20px;
+    height: 80px;
+    line-height: 80px;
+    padding-left: 25px;
+  }
 `;
 class SiderMenu extends React.Component {
   constructor(props) {
@@ -19,53 +29,46 @@ class SiderMenu extends React.Component {
       <Container>
         <h1>管理后台</h1>
         <Menu
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={menuList[0].key}
           defaultOpenKeys={["sub1"]}
           mode="inline"
           theme="dark"
         >
-          <Menu.Item key="1">
-            <Icon type="pie-chart" />
-            <span>Option 1</span>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <Icon type="desktop" />
-            <span>Option 2</span>
-          </Menu.Item>
-          <Menu.Item key="3">
-            <Icon type="inbox" />
-            <span>Option 3</span>
-          </Menu.Item>
-          <SubMenu
-            key="sub1"
-            title={
-              <span>
-                <Icon type="mail" />
-                <span>Navigation One</span>
-              </span>
+          {menuList.map(item => {
+            if (item.children) {
+              return (
+                <SubMenu
+                  key={item.key}
+                  title={
+                    <span>
+                      <Icon type={item.icon} />
+                      <span>{item.title}</span>
+                    </span>
+                  }
+                >
+                  {item.children.map(menuItem => {
+                    return (
+                      <Menu.Item key={menuItem.key}>
+                        <Link to={menuItem.key}>
+                          <Icon type={menuItem.icon} />
+                          <span>{menuItem.title}</span>
+                        </Link>
+                      </Menu.Item>
+                    );
+                  })}
+                </SubMenu>
+              );
+            } else {
+              return (
+                <Menu.Item key={item.key}>
+                  <Link to={item.key}>
+                    <Icon type={item.icon} />
+                    <span>{item.title}</span>
+                  </Link>
+                </Menu.Item>
+              );
             }
-          >
-            <Menu.Item key="5">Option 5</Menu.Item>
-            <Menu.Item key="6">Option 6</Menu.Item>
-            <Menu.Item key="7">Option 7</Menu.Item>
-            <Menu.Item key="8">Option 8</Menu.Item>
-          </SubMenu>
-          <SubMenu
-            key="sub2"
-            title={
-              <span>
-                <Icon type="appstore" />
-                <span>Navigation Two</span>
-              </span>
-            }
-          >
-            <Menu.Item key="9">Option 9</Menu.Item>
-            <Menu.Item key="10">Option 10</Menu.Item>
-            <SubMenu key="sub3" title="Submenu">
-              <Menu.Item key="11">Option 11</Menu.Item>
-              <Menu.Item key="12">Option 12</Menu.Item>
-            </SubMenu>
-          </SubMenu>
+          })}
         </Menu>
       </Container>
     );

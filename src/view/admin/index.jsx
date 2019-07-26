@@ -7,6 +7,7 @@ import SiderMenu from "./menu";
 
 const Container = styled.div`
   display: flex;
+  min-height: 850px;
   .main {
     flex: 1;
     background-color: #f0f2f5;
