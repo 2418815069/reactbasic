@@ -1,9 +1,10 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./header";
 import { getLocalStorage } from "../../utils/localStrageUtils";
 import SiderMenu from "./menu";
+import RouterList from "../../router/index";
 
 const Container = styled.div`
   display: flex;
@@ -25,6 +26,8 @@ class Admin extends React.Component {
     };
   }
   render() {
+    console.log("document.title", document.title);
+    // document.title=lo
     // 如果用户已登陆，自动跳转到管理首页
     if (!getLocalStorage("username")) {
       return <Redirect to="/login" />;
@@ -34,10 +37,12 @@ class Admin extends React.Component {
         <SiderMenu />
         <div className="main">
           <Header />
-          <div className="adminContent" />
+          <div className="adminContent">
+            <RouterList />
+          </div>
         </div>
       </Container>
     );
   }
 }
-export default Admin;
+export default withRouter(Admin);

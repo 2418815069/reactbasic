@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { Button } from "antd";
 import styled from "styled-components";
 import {
@@ -27,18 +28,24 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: getLocalStorage("username"),
-      nowTime: ""
-    };
-  }
-  updateTime = () => {
-    this.setState = {
       nowTime: formateDate(Date.now())
     };
-    console.log(this.state.nowTime);
+  }
+  // state = {
+  //   nowTime: formateDate(Date.now())
+  // };
+  updateTime = () => {
+    // const nowTime = formateDate(Date.now());
+    this.setState = () => {
+      formateDate(Date.now());
+      console.log("this.state.nowTime", this.state.nowTime, Date.now());
+    };
+    // console.log("this.state.nowTime", this.state.nowTime, Date.now());
   };
   componentDidMount() {
-    this.interval = setInterval(() => this.updateTime(), 1000);
+    console.log("document.title", document.title);
+    // this.updateTime();
+    this.interval = setInterval(this.updateTime(), 1000);
   }
 
   componentWillUnmount() {
@@ -49,12 +56,12 @@ class Header extends React.Component {
     return (
       <Container>
         <VirticalCenter className="divider">
-          <span>{this.state.username}</span>
+          <span>欢迎,{getLocalStorage("username")}</span>
           <Button
             style={{ border: "none" }}
             onClick={() => {
               removeLocalStorage("username");
-              console.log(this.state.username);
+              this.props.history.replace("/login");
             }}
           >
             退出
@@ -68,4 +75,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

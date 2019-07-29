@@ -25,17 +25,25 @@ class SiderMenu extends React.Component {
     this.state = {};
   }
   render() {
+    const { location } = this.props;
+    let statekey = [];
     return (
       <Container>
         <h1>管理后台</h1>
         <Menu
-          defaultSelectedKeys={menuList[0].key}
-          defaultOpenKeys={["sub1"]}
+          selectedKeys={[location.pathname]}
+          defaultOpenKeys={statekey}
           mode="inline"
           theme="dark"
         >
           {menuList.map(item => {
             if (item.children) {
+              item.children.filter(child => {
+                if (child.key === location.pathname) {
+                  statekey.push(item.key);
+                }
+              });
+              console.log(statekey);
               return (
                 <SubMenu
                   key={item.key}
@@ -75,4 +83,4 @@ class SiderMenu extends React.Component {
   }
 }
 
-export default SiderMenu;
+export default withRouter(SiderMenu);

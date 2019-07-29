@@ -4,6 +4,7 @@ import Login from './view/login/login';
 import Admin from './view/admin/index';
 
 function App() {
+  // console.log("document.title", document.title,this.props);
   return (
     <BrowserRouter>
     <Switch>
