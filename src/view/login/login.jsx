@@ -3,19 +3,19 @@ import "./login.less";
 import { Form, Icon, Input, Button, Checkbox, message } from "antd";
 import axios from "axios";
 import { setLocalStorage, getLocalStorage } from "../../utils/localStrageUtils";
-// import { reqLogin } from "../../api/index";
+import { reqLogin } from "../../api/index";
 
 class WrappedNormalLoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      result: ""
+      // result: ""
     };
   }
   handleSubmit = e => {
     e.preventDefault();
 
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async (err, values) => {
       console.log(values);
       if (!err) {
         console.log(values);
@@ -25,33 +25,26 @@ class WrappedNormalLoginForm extends React.Component {
           setLocalStorage("loginStatus", 1);
         }
         // console.log("Received values of form: ", values);
-        // reqLogin(values.username, values.password).then(res => {
-        //   console.log(res);
-        // });
+        const result = await reqLogin(values.username, values.password);
         // values
-        axios
-          .post("/login", {
-            username: values.username,
-            password: values.password
-          })
-          .then(response => {
-            this.setState({
-              result: response.data
-            });
-            if (this.state.result.status === 0) {
-              message.success("登陆成功 ");
-              // 跳转到后台管理界面
-              this.props.history.push("/");
-            } else if (this.state.result.status === 1) {
-              message.error("登陆失败,用户名或密码不正确");
-            }
-            console.log(response.data);
-          })
-          .catch(error => {
-            console.log(error);
-          });
+        // axios
+        //   .post("/login", {
+        //     username: values.username,
+        //     password: values.password
+        //   })
+        //   .then(response => {
+        //     this.setState({
+        //       result: response.data
+        //     });
+        if (result.status === 0) {
+          message.success("登陆成功 ");
+          // 跳转到后台管理界面
+          this.props.history.push("/");
+        } else if (result.status === 1) {
+          message.error("登陆失败,用户名或密码不正确");
+        }
       } else {
-        message.error("登陆失败，请检查 ");
+        message.error("登陆失败，请检查格式 ");
       }
     });
   };
