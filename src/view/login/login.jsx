@@ -1,7 +1,6 @@
 import React from "react";
 import "./login.less";
 import { Form, Icon, Input, Button, Checkbox, message } from "antd";
-import axios from "axios";
 import { setLocalStorage, getLocalStorage } from "../../utils/localStrageUtils";
 import { reqLogin } from "../../api/index";
 

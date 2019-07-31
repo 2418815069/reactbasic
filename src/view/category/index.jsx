@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Button } from "antd";
 import CategoryTable from "./table";
@@ -26,18 +26,20 @@ const Container = styled.div`
     border-radius: 4px;
   }
 `;
-const Category = () => {
-  return (
-    <Container>
-      <div className="mainhead">
-        <h1>一级分类列表</h1>
-        <Button type="primary">+ 添加</Button>
-      </div>
-      <div className="tableBox">
-        <CategoryTable />
-      </div>
-    </Container>
-  );
-};
+class Category extends React.Component {
+  render() {
+    return (
+      <Container>
+        <div className="mainhead">
+          <h1>一级分类列表</h1>
+          <Button type="primary">+ 添加</Button>
+        </div>
+        <div className="tableBox">
+          <CategoryTable />
+        </div>
+      </Container>
+    );
+  }
+}
 
 export default Category;
