@@ -46,7 +46,7 @@ const Category = (props) => {
     setAddVisible(true);
   };
   const addFormOk = e => {
-    this.form.validateFields((err, values) => {
+    props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
       }
@@ -62,6 +62,7 @@ const Category = (props) => {
     showModal();
     getCategorys();
   }, []);
+  
   return (
     <Container>
       <div className="mainhead">
@@ -76,7 +77,7 @@ const Category = (props) => {
         onCancel={handleCancel}
         visible={addVisible}
       >
-        <AddForm result={result} setForm={(form) => {this.form = form}}/>
+        <AddForm result={result} setForm={(form) => {form = form}}/>
       </Modal>
       <div className="tableBox">
         <CategoryTable loading={loading} tableData={result} />
@@ -84,5 +85,6 @@ const Category = (props) => {
     </Container>
   );
 };
+
 
 export default Category;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Form, Select, Input } from "antd";
 
@@ -10,6 +10,10 @@ const AddForm = props => {
   const handleChange = value => {
     console.log(`selected ${value}`);
   };
+  useEffect(() => {
+    props.setForm(props.form);
+    console.log('props.setForm',props.setForm);
+  }, []);
   console.log("result", result);
   return (
     <Form>
@@ -38,6 +42,7 @@ const AddForm = props => {
 };
 
 AddForm.propTypes = {
+  setForm: PropTypes.func.isRequired, // 用来传递form对象的函数
   result: PropTypes.array.isRequired
 };
 export default Form.create()(AddForm);
