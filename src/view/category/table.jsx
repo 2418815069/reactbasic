@@ -1,46 +1,42 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Table, Divider, Tag } from "antd";
-
-const { Column } = Table;
+import { Table, Divider, Button } from "antd";
 
 const CategoryTable = props => {
-  const data = [
+  const { loading, tableData } = props;
+  console.log(tableData);
+
+  const columns = [
     {
-      key: "1",
-      firstName: "John",
-      lastName: "Brown"
+      title: "分类的名称",
+      dataIndex: "name",
+      key: "name"
     },
     {
-      key: "2",
-      firstName: "Jim",
-      lastName: "Green"
-    },
-    {
-      key: "3",
-      firstName: "Joe",
-      lastName: "Black"
+      title: "操作",
+      width: 300,
+      key: "action",
+      render: () => (
+        <span>
+          <Button
+            style={{ border: "none" }}
+            onClick={() => {
+              console.log("button");
+            }}
+          >
+            修改分类
+          </Button>
+          {/* <a href="javascript:;">修改分类</a> */}
+          <Divider type="vertical" />
+          <a href="javascript:;">查看子分类</a>
+        </span>
+      )
     }
   ];
-  return (
-    <Table dataSource={data}>
-      <Column title="分类的名称" dataIndex="firstName" key="firstName" />
-      <Column
-        title="操作"
-        key="action"
-        render={(text, record) => (
-          <span>
-            <a href="javascript:;">修改分类</a>
-            <Divider type="vertical" />
-            <a href="javascript:;">查看子分类</a>
-          </span>
-        )}
-      />
-    </Table>
-  );
+  return <Table dataSource={tableData} loading={loading} columns={columns} />;
 };
 
 CategoryTable.propTypes = {
-  // formList: PropTypes.object.isRequired
+  loading: PropTypes.bool.isRequired
 };
 export default CategoryTable;

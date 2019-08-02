@@ -43,7 +43,6 @@ class SiderMenu extends React.Component {
                   statekey.push(item.key);
                 }
               });
-              console.log(statekey);
               return (
                 <SubMenu
                   key={item.key}

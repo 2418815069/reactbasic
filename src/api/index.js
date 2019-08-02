@@ -5,14 +5,14 @@ export const reqLogin = (username, password) => getData(BASE + '/login', {
   username,
   password
 }, 'POST')
-export const reqCategoryList = (parentId) => getData(BASE + '/category/list', {
+export const reqCategoryList = (parentId) => getData(BASE + '/manage/category/list', {
   parentId
 }, 'GET')
-export const reqCategoryAdd = (parentId, categoryName) => getData(BASE + '/category/add', {
+export const reqCategoryAdd = (parentId, categoryName) => getData(BASE + '/manage/category/add', {
   parentId,
   categoryName
 }, 'POST')
-export const reqCategoryUpdate = (parentId, categoryName) => getData(BASE + '/category/update', {
+export const reqCategoryUpdate = (parentId, categoryName) => getData(BASE + '/manage/category/update', {
   parentId,
   categoryName
 }, 'POST')
